@@ -1,4 +1,4 @@
-🎮 GameVault
+# 🎮 GameVault
 
 GameVault is a full-stack eCommerce web application built using the MERN Stack (MongoDB, Express.js, React.js, Node.js).
 It’s a clone-style project designed to simulate a modern game store — where users can browse, view, and “purchase” games.
