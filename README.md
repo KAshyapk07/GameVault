@@ -1,17 +1,34 @@
-# Webtech-project
-E-commerce web for games
+🎮 GameVault
+
+GameVault is a full-stack eCommerce web application built using the MERN Stack (MongoDB, Express.js, React.js, Node.js).
+It’s a clone-style project designed to simulate a modern game store — where users can browse, view, and “purchase” games.
+
+🧠 Features
+
+🕹️ Browse a collection of games with images, prices, and details
+
+🛒 Add games to cart (frontend-only / optional backend integration)
+
+🔍 Search and filter games
+
+👤 Basic user authentication (optional / placeholder login for demo)
+
+📱 Responsive UI built with React
+
+⚙️ REST API built with Express & MongoDB
+
+💾 Persistent data handling (MongoDB Atlas or local instance)
+
+🏗️ Tech Stack
+Layer	Technology
+Frontend	React.js, React Router, Axios
+Backend	Node.js, Express.js
+Database	MongoDB / MongoDB Atlas
+Tools	npm, dotenv, nodemon
+Version Control	Git & GitHub
+
 
 Figma link
 https://www.figma.com/design/L3hxU3Q3DbbMbJHTQK6Pe9/wireframe?node-id=1-2&t=lwV4ZwzpuBNChNo9-1
 
 
-Credits:
-// KASHYAP //
-//Rohan //
-// Nishanth//
-
-
-CUTSCENES
-link-
-https://www.google.com/search?sca_esv=33073fab614d76a8&sxsrf=ADLYWIK6MMTmpg-LHMZNckqy5JqwMxJxzA:1728887968203&q=forza+horizon+cutscene+cinematics&tbm=vid&source=lnms&fbs=AEQNm0DVrIRjdA3gRKfJJ-deMT8ZtYOjoIt1NWOMRkEKym4u5PkAZgxJOmIgPx6WieMhF6q1Hq7W6nME2Vp0eHuijF3ZElaTgD0zbj1gkQrti2r6Hqf52sUY2L97Z00mTdpvkbp7UVF9fTJKs_P0fwuiLZv5de78YUF-t9kg0hkPeBAnXK-TcdcO0NNnFYnbQ6pFqogiYdIQXtG2An3vBotZb5cgjkTGGQ&sa=X&ved=2ahUKEwjW2c3JoY2JAxUCTWwGHfH4HFIQ0pQJegQIEhAB&biw=1536&bih=748&dpr=1.25#fpstate=ive&vld=cid:f3ffa116,vid:_MdiLQKTiWs,st:0
-(just in case video files are corrupted)
