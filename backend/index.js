@@ -17,17 +17,41 @@ app.use((req, res, next) => {
   next();
 });
 
-// Connect to MongoDB
+// --- Serverless-safe MongoDB connection with caching ---
+// In Vercel serverless each function invocation may be a cold start.
+// We cache the connection so it is reused across warm invocations.
+mongoose.set("bufferCommands", false); // fail fast instead of buffering when not connected
+
+let isConnected = false;
+
 const connectDB = async () => {
+  if (isConnected) return;
+  if (mongoose.connection.readyState === 1) {
+    isConnected = true;
+    return;
+  }
   try {
-    await mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://KashyapK:Iamkash2272@cluster0.v8dhv.mongodb.net/e-commerce");
+    await mongoose.connect(
+      process.env.MONGODB_URI || "mongodb+srv://KashyapK:Iamkash2272@cluster0.v8dhv.mongodb.net/e-commerce",
+      { serverSelectionTimeoutMS: 10000 }
+    );
+    isConnected = true;
     console.log("Connected to MongoDB");
   } catch (err) {
     console.error("MongoDB connection error:", err.message);
+    throw err;
   }
 };
 
-connectDB();
+// Ensure DB is connected before every request (critical for serverless cold starts)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ error: "Database connection failed", details: err.message });
+  }
+});
 
 // app.get("/", (req, res) => {
 //   res.send("Express App is Running");
@@ -266,10 +290,16 @@ app.post("/getcart", fetchUser, async (req, res) => {
 //   });
 // }
 
-app.listen(port, (error) => {
-  if (!error) {
-    console.log("Server running on port " + port);
-  } else {
-    console.error("Error starting server:", error);
-  }
-});
+// Only start the HTTP server when running locally (not on Vercel serverless)
+if (process.env.VERCEL !== "1") {
+  app.listen(port, (error) => {
+    if (!error) {
+      console.log("Server running on port " + port);
+    } else {
+      console.error("Error starting server:", error);
+    }
+  });
+}
+
+// Export for Vercel serverless (@vercel/node picks this up)
+module.exports = app;

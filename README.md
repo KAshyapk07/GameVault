@@ -1,5 +1,14 @@
 # GameVault
 
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react&logoColor=white&labelColor=20232A)
+![Node.js](https://img.shields.io/badge/Node.js-v16%2B-339933?style=flat&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.x-000000?style=flat&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose%208-47A248?style=flat&logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/Auth-JWT-000000?style=flat&logo=jsonwebtokens&logoColor=white)
+![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=flat&logo=vercel&logoColor=white)
+![JavaScript](https://img.shields.io/badge/Language-JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![License](https://img.shields.io/badge/License-ISC-blue?style=flat)
+
 A full-stack e-commerce web application for browsing and purchasing video games. The project features a customer storefront, a REST API backend, and an integrated, role-based admin dashboard.
 
 ## Tech Stack
