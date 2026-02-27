@@ -23,7 +23,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/index.js/$1"
+      "dest": "backend/index.js"
     },
     {
       "src": "/admin/(.*)",

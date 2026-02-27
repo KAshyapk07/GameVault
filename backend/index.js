@@ -11,6 +11,12 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
+// Strip /api prefix added by Vercel routing so Express routes still work as /routename
+app.use((req, res, next) => {
+  req.url = req.url.replace(/^\/api/, '') || '/';
+  next();
+});
+
 // Connect to MongoDB
 const connectDB = async () => {
   try {
