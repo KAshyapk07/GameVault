@@ -89,6 +89,21 @@ const getBackendUrl = () => {
   return `http://localhost:${port}`;
 };
 
+// Rewrites a stored image URL to use the current backend's base URL.
+// Handles URLs like http://localhost:4000/images/foo.jpg -> https://live-domain/api/images/foo.jpg
+const fixImageUrl = (url) => {
+  if (!url) return url;
+  const match = url.match(/\/images\/(.+)$/);
+  if (!match) return url;
+  return `${getBackendUrl()}/images/${match[1]}`;
+};
+
+// Converts a Mongoose document (or array) to plain object(s) with corrected image URLs
+const withFixedImages = (docs) => {
+  const fix = (doc) => { const o = doc.toObject(); o.image = fixImageUrl(o.image); return o; };
+  return Array.isArray(docs) ? docs.map(fix) : fix(docs);
+};
+
 app.post("/upload", upload.single("product"), (req, res) => {
   const backendUrl = getBackendUrl();
   res.json({
@@ -167,23 +182,23 @@ app.post("/removeproduct", async (req, res) => {
 
 app.get("/allproducts", async (req, res) => {
   const products = await Product.find({});
-  res.send(products);
+  res.json(withFixedImages(products));
 });
 
 app.get("/newcollections", async (req, res) => {
   const products = await Product.find({});
-  res.send(products.slice(1).slice(-8));
+  res.json(withFixedImages(products.slice(1).slice(-8)));
 });
 
 app.get("/popular", async (req, res) => {
   const products = await Product.find({}).sort({ views: -1 }).limit(10);
-  res.send(products);
+  res.json(withFixedImages(products));
 });
 
 app.get("/mostliked", async (req, res) => {
   try {
     const products = await Product.find({}).sort({ likes: -1 }).limit(10);
-    res.send(products);
+    res.json(withFixedImages(products));
   } catch (error) {
     res.status(500).send("Server error");
   }
