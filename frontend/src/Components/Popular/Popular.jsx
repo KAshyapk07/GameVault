@@ -7,7 +7,7 @@ const Popular = () => {
 
   useEffect(() => {
     const fetchPopularProducts = () => {
-      fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/popular`)
+      fetch(`/api/popular`)
         .then((response) => response.json())
         .then((data) => setPopularProducts(data))
         .catch((error) => console.error("Error fetching popular products:", error));

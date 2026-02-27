@@ -15,13 +15,13 @@ const ShopContextprovider =(props)=>{
     const [isAdmin, setIsAdmin] = useState(false);
     
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/allproducts`)
+        fetch(`/api/allproducts`)
         .then((response)=>response.json())
         .then((data)=>setAll_product(data))
         .catch((err)=>console.error("Could not load products (is the backend running?):", err));
 
         if(localStorage.getItem('auth-token')){
-            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/getcart`,{
+            fetch(`/api/getcart`,{
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
@@ -34,7 +34,7 @@ const ShopContextprovider =(props)=>{
             .catch((err)=>console.error("Could not load cart:", err));
 
             // Check admin status
-            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/isadmin`,{
+            fetch(`/api/isadmin`,{
                 method:'GET',
                 headers:{
                     'auth-token':`${localStorage.getItem('auth-token')}`,
@@ -48,7 +48,7 @@ const ShopContextprovider =(props)=>{
     const addToCart=(itemId)=>{
         setCartitems((prev)=>({...prev,[itemId]:prev[itemId]+1}))
         if(localStorage.getItem('auth-token')){
-            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/addtocart`,{
+            fetch(`/api/addtocart`,{
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',
@@ -63,7 +63,7 @@ const ShopContextprovider =(props)=>{
     const removeFromCart=(itemId)=>{
         setCartitems((prev)=>({...prev,[itemId]:prev[itemId]-1}))
         if(localStorage.getItem('auth-token')){
-            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/removefromcart`,{
+            fetch(`/api/removefromcart`,{
                 method:'POST',
                 headers:{
                     Accept:'application/form-data',

@@ -27,7 +27,7 @@ const AdminPanel = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/allproducts`)
+      const res = await fetch(`/api/allproducts`)
       const data = await res.json()
       setAllProducts(data)
     } catch (err) {
@@ -49,7 +49,7 @@ const AdminPanel = () => {
     try {
       const formData = new FormData()
       formData.append('product', image)
-      const uploadRes = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/upload`, {
+      const uploadRes = await fetch(`/api/upload`, {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: formData
@@ -58,7 +58,7 @@ const AdminPanel = () => {
 
       if (uploadData.success) {
         const product = { ...productDetails, image: uploadData.image_url }
-        const addRes = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/addproduct`, {
+        const addRes = await fetch(`/api/addproduct`, {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
           body: JSON.stringify(product)
@@ -82,7 +82,7 @@ const AdminPanel = () => {
   const removeProduct = async (id) => {
     if (!window.confirm('Are you sure you want to remove this product?')) return
     try {
-      await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/removeproduct`, {
+      await fetch(`/api/removeproduct`, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ id })

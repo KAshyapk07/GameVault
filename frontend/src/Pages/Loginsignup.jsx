@@ -19,7 +19,7 @@ const Loginsignup = () => {
   }
 
   const login = async()=>{
-    const endpoint = isAdminLogin ? `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/adminlogin` : `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/login`;
+    const endpoint = isAdminLogin ? `/api/adminlogin` : `/api/login`;
     let responseData;
     await fetch(endpoint,{
       method:'POST',
@@ -43,7 +43,7 @@ const Loginsignup = () => {
 
   const signup = async()=>{
     let responseData;
-    await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/signup`,{
+    await fetch(`/api/signup`,{
       method:'POST',
       headers:{
         Accept:'application/json',

@@ -6,7 +6,7 @@ const Newcollection = () => {
   const [new_collection,setNew_collection] = useState([]);
 
   useEffect(()=>{
-      fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/newcollections`)
+      fetch(`/api/newcollections`)
       .then((response)=>response.json())
       .then((data)=>setNew_collection(data))
       .catch((err)=>console.error("Could not load new collections:", err));

@@ -7,7 +7,7 @@ const Liked = () => {
 
   // Fetch most liked products on component mount
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/mostliked`)
+    fetch(`/api/mostliked`)
       .then((response) => response.json())
       .then((data) => setMostLikedProducts(data))
       .catch((error) => console.error("Error fetching most liked products:", error));
@@ -28,7 +28,7 @@ const Liked = () => {
             old_price={item.old_price}
             likes={item.likes} 
             fetchMostLiked={() => { // Pass function to refetch data
-              fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/mostliked`)
+              fetch(`/api/mostliked`)
                 .then((response) => response.json())
                 .then((data) => setMostLikedProducts(data))
                 .catch((error) => console.error("Error updating liked products:", error));

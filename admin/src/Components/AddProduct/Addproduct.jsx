@@ -26,7 +26,7 @@ const Addproduct = () => {
     let formData = new FormData();
     formData.append('product',image);
 
-    await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:4000'}/upload`,{
+    await fetch(`/api/upload`,{
       method:'POST',
       headers:{
           Accept:'application/json'
@@ -37,7 +37,7 @@ const Addproduct = () => {
 
   if(responseData.success){
     product.image= responseData.image_url;
-    await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:4000'}/addproduct`,{
+    await fetch(`/api/addproduct`,{
          method:'POST',
          headers:{
           Accept:'application/json',
