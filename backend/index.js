@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 const cors = require("cors");
 
 app.use(express.json());
@@ -53,14 +54,20 @@ app.use(async (req, res, next) => {
   }
 });
 
-// app.get("/", (req, res) => {
-//   res.send("Express App is Running");
-// });
 
 // Image upload
 
+// On Vercel the filesystem is read-only except /tmp, so write uploads there.
+// Locally, write directly into backend/upload/images so express.static can serve them.
+const uploadDir = process.env.VERCEL
+  ? "/tmp/images"
+  : path.join(__dirname, "upload/images");
+
+// Ensure the upload directory exists (critical for /tmp on Vercel cold starts)
+try { fs.mkdirSync(uploadDir, { recursive: true }); } catch (_) {}
+
 const storage = multer.diskStorage({
-  destination: "./upload/images",
+  destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
     return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
   },
@@ -68,10 +75,22 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.use("/images", express.static("upload/images"));
+// Serve committed product images (from git) and any uploaded to /tmp on this instance
+app.use("/images", express.static(path.join(__dirname, "upload/images")));
+app.use("/images", express.static("/tmp/images"));
+
+// Auto-detect backend URL:
+// - On Vercel: VERCEL_URL is set automatically (e.g. your-project.vercel.app)
+//   Images are routed through /api/... so prefix with /api
+// - Locally: fallback to localhost
+const getBackendUrl = () => {
+  if (process.env.BACKEND_URL) return process.env.BACKEND_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}/api`;
+  return `http://localhost:${port}`;
+};
 
 app.post("/upload", upload.single("product"), (req, res) => {
-  const backendUrl = process.env.BACKEND_URL || `http://localhost:${port}`;
+  const backendUrl = getBackendUrl();
   res.json({
     success: 1,
     image_url: `${backendUrl}/images/${req.file.filename}`,
@@ -90,6 +109,39 @@ const Product = mongoose.model("Product", {
   available: { type: Boolean, default: true },
   views: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
+});
+
+// Healthcheck — visit /api/health to verify DB connection and product count
+app.get("/health", async (req, res) => {
+  try {
+    const count = await Product.countDocuments();
+    res.json({ status: "ok", dbState: mongoose.connection.readyState, productCount: count });
+  } catch (err) {
+    res.status(500).json({ status: "error", error: err.message });
+  }
+});
+
+// One-time migration: fixes product image URLs that were saved with http://localhost:4000
+// Visit /api/fix-image-urls once after deploying to update all stored URLs to the live domain
+app.get("/fix-image-urls", async (req, res) => {
+  try {
+    const products = await Product.find({});
+    const backendUrl = getBackendUrl();
+    let fixed = 0;
+    for (const p of products) {
+      if (p.image && p.image.includes("localhost")) {
+        const filename = p.image.split("/images/")[1];
+        if (filename) {
+          p.image = `${backendUrl}/images/${filename}`;
+          await p.save();
+          fixed++;
+        }
+      }
+    }
+    res.json({ message: "Done", fixed, total: products.length, backendUrl });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.post("/addproduct", async (req, res) => {
