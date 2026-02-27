@@ -13,7 +13,7 @@ const ProductDisplay = (props) => {
 
     const handleLike = async () => {
         try {
-            const response = await fetch('http://localhost:4000/like', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/like`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: product.id }),

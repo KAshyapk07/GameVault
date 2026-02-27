@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Item = (props) => {
   const handleProductClick = async () => {
     try {
-      await fetch('http://localhost:4000/incrementviews', {
+      await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:4000'}/incrementviews`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: props.id }),

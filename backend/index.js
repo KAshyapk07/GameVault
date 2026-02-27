@@ -1,4 +1,5 @@
-const port = 4000;
+require("dotenv").config();
+const port = process.env.PORT || 4000;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 mongoose
-  .connect("mongodb+srv://KashyapK:Iamkash2272@cluster0.v8dhv.mongodb.net/e-commerce")
+  .connect(process.env.MONGODB_URI || "mongodb+srv://KashyapK:Iamkash2272@cluster0.v8dhv.mongodb.net/e-commerce")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err.message));
 
@@ -33,9 +34,10 @@ const upload = multer({ storage });
 app.use("/images", express.static("upload/images"));
 
 app.post("/upload", upload.single("product"), (req, res) => {
+  const backendUrl = process.env.BACKEND_URL || `http://localhost:${port}`;
   res.json({
     success: 1,
-    image_url: `http://localhost:${port}/images/${req.file.filename}`,
+    image_url: `${backendUrl}/images/${req.file.filename}`,
   });
 });
 
@@ -236,6 +238,20 @@ app.post("/getcart", fetchUser, async (req, res) => {
   const userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
 });
+
+// Serve frontend and admin in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+  app.use('/admin', express.static(path.join(__dirname, '../admin/dist')));
+
+  app.get('/admin/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../admin/dist/index.html'));
+  });
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+  });
+}
 
 app.listen(port, (error) => {
   if (!error) {
