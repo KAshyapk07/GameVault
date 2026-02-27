@@ -80,12 +80,12 @@ app.use("/images", express.static(path.join(__dirname, "upload/images")));
 app.use("/images", express.static("/tmp/images"));
 
 // Auto-detect backend URL:
-// - On Vercel: VERCEL_URL is set automatically (e.g. your-project.vercel.app)
-//   Images are routed through /api/... so prefix with /api
-// - Locally: fallback to localhost
+// - On Vercel: use relative /api path so images work on ANY Vercel URL (production or preview)
+//   VERCEL_URL changes per deployment and would break images on production aliases
+// - Locally: fallback to http://localhost:PORT
 const getBackendUrl = () => {
   if (process.env.BACKEND_URL) return process.env.BACKEND_URL;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}/api`;
+  if (process.env.VERCEL) return `/api`;
   return `http://localhost:${port}`;
 };
 
