@@ -11,10 +11,17 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-mongoose
-  .connect(process.env.MONGODB_URI || "mongodb+srv://KashyapK:Iamkash2272@cluster0.v8dhv.mongodb.net/e-commerce")
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err.message));
+// Connect to MongoDB
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://KashyapK:Iamkash2272@cluster0.v8dhv.mongodb.net/e-commerce");
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error("MongoDB connection error:", err.message);
+  }
+};
+
+connectDB();
 
 // app.get("/", (req, res) => {
 //   res.send("Express App is Running");
