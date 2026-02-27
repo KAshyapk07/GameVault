@@ -6,13 +6,6 @@ const Popular = () => {
   const [popularProducts, setPopularProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/popular')
-      .then((response) => response.json())
-      .then((data) => setPopularProducts(data))
-      .catch((error) => console.error("Error fetching popular products:", error));
-  }, []); // Fetch data when component loads
-
-  useEffect(() => {
     const fetchPopularProducts = () => {
       fetch('http://localhost:4000/popular')
         .then((response) => response.json())

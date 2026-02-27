@@ -21,9 +21,8 @@ const Addproduct = () => {
 
 
   const Add_product = async ()=>{
-    console.log(productDetails);
     let responseData;
-    let  product = productDetails;
+    let product = productDetails;
     let formData = new FormData();
     formData.append('product',image);
 
@@ -38,7 +37,6 @@ const Addproduct = () => {
 
   if(responseData.success){
     product.image= responseData.image_url;
-    console.log(product);
     await fetch('http://localhost:4000/addproduct',{
          method:'POST',
          headers:{

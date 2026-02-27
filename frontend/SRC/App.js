@@ -6,7 +6,7 @@ import Shop from './Pages/Shop';
 import Product from './Pages/Product'
 import Shopcategory from './Pages/Shopcategory';
 import Mostliked from './Pages/Mostliked';
-
+import AdminPanel from './Pages/AdminPanel';
 import Cart from './Pages/Cart';
 import Loginsignup from './Pages/Loginsignup';
 import Footer from './Components/Footer/Footer';
@@ -27,6 +27,7 @@ function App() {
         <Route path='/product/:productId' element={<Product/>}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/login' element={<Loginsignup/>}/>
+        <Route path='/admin' element={<AdminPanel/>}/>
         </Routes>
         <Footer/>
       </BrowserRouter>

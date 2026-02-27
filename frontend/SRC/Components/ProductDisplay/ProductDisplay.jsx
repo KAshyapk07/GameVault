@@ -7,9 +7,10 @@ import { ShopContext } from '../../Context/ShopContext';
 const ProductDisplay = (props) => {
     const { product } = props;
     const { addToCart } = useContext(ShopContext);
-    const [likes, setLikes] = useState(product.likes || 0); // Initialize likes from the product object
+    const [likes, setLikes] = useState(product.likes || 0);
+    const [liked, setLiked] = useState(false);
+    const [addedToCart, setAddedToCart] = useState(false);
 
-    // Handle like functionality
     const handleLike = async () => {
         try {
             const response = await fetch('http://localhost:4000/like', {
@@ -19,49 +20,83 @@ const ProductDisplay = (props) => {
             });
             const data = await response.json();
             if (data.success) {
-                setLikes(data.likes); // Update likes count dynamically
-                alert(`You liked ${product.name}. Total Likes: ${data.likes}`);
+                setLikes(data.likes);
+                setLiked(true);
             }
         } catch (error) {
             console.error("Error liking the product:", error);
         }
     };
 
+    const handleAddToCart = () => {
+        addToCart(product.id);
+        setAddedToCart(true);
+        setTimeout(() => setAddedToCart(false), 1500);
+    };
+
     return (
-        <div className="productdisplay">
-            <div className="productdisplay-left">
-                <div className="productdisplay-img-list">
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
+        <div className="pd-container">
+            {/* Image section */}
+            <div className="pd-image-section">
+                <div className="pd-main-image-wrap">
+                    <img className="pd-main-image" src={product.image} alt={product.name} />
                 </div>
-                <div className="productdisplay-img">
-                    <img className='productdisplay-main-img' src={product.image} alt="" />
+                <div className="pd-thumb-row">
+                    <img className="pd-thumb" src={product.image} alt="" />
+                    <img className="pd-thumb" src={product.image} alt="" />
+                    <img className="pd-thumb" src={product.image} alt="" />
+                    <img className="pd-thumb" src={product.image} alt="" />
                 </div>
             </div>
-            <div className="productdisplay-right">
-                <h1>{product.name}</h1>
-                <div className="productdisplay-right-star">
-                    <img src={star_icon} alt="" />
-                    <img src={star_icon} alt="" />
-                    <img src={star_icon} alt="" />
-                    <img src={star_icon} alt="" />
-                    <img src={star_dull_icon} alt="" />
-                    <p>(122)</p>
-                </div>
-                <div className="productdisplay-right-prices">
-                    <div className="productdisplay-right-price-old">${product.old_price}</div>
-                    <div className="productdisplay-right-price-new">${product.new_price}</div>
-                </div>
-                <div className="productdisplay-right-description">
-                    It is a very good game, based on what we have seen so far, just writing this for testing.
-                </div>
-                <button className="like-button" onClick={handleLike}>
-                    Like
-                </button>
-                <button onClick={() => { addToCart(product.id); }}>ADD TO CART</button>
 
+            {/* Info section */}
+            <div className="pd-info">
+                <h1 className="pd-title">{product.name}</h1>
+
+                <div className="pd-stars">
+                    <img src={star_icon} alt="star" />
+                    <img src={star_icon} alt="star" />
+                    <img src={star_icon} alt="star" />
+                    <img src={star_icon} alt="star" />
+                    <img src={star_dull_icon} alt="star" />
+                    <span className="pd-reviews">(122 reviews)</span>
+                </div>
+
+                <div className="pd-price-block">
+                    <span className="pd-price-new">${product.new_price}</span>
+                    {product.old_price > 0 && (
+                        <span className="pd-price-old">${product.old_price}</span>
+                    )}
+                    {product.old_price > product.new_price && (
+                        <span className="pd-discount">
+                            {Math.round(((product.old_price - product.new_price) / product.old_price) * 100)}% OFF
+                        </span>
+                    )}
+                </div>
+
+                <p className="pd-description">
+                    Experience the thrill of <strong>{product.name}</strong>. Immerse yourself in stunning graphics and captivating gameplay.
+                </p>
+
+                <div className="pd-meta">
+                    <div className="pd-meta-item">
+                        <span className="pd-meta-label">Availability</span>
+                        <span className="pd-meta-value pd-in-stock">In Stock</span>
+                    </div>
+                    <div className="pd-meta-item">
+                        <span className="pd-meta-label">Likes</span>
+                        <span className="pd-meta-value">{likes}</span>
+                    </div>
+                </div>
+
+                <div className="pd-actions">
+                    <button className="pd-btn-cart" onClick={handleAddToCart}>
+                        {addedToCart ? '✓ Added!' : 'Add to Cart'}
+                    </button>
+                    <button className={`pd-btn-like ${liked ? 'pd-btn-liked' : ''}`} onClick={handleLike}>
+                        {liked ? '♥ Liked' : '♡ Like'}
+                    </button>
+                </div>
             </div>
         </div>
     );

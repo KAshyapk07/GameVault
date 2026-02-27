@@ -1,68 +1,97 @@
 .footer{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 50px;
-    margin-top: 20%;
+    justify-content: space-between;
+    padding: 16px 5%;
+    background: #1a1a2e;
+    color: #999;
+    font-size: 12px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
-.footer-logo{
+.footerlogo{
     display: flex;
     align-items: center;
-    gap: 20px;
-}
-
-.footer-logo p{
-    color: #383838;
-    font-size:46px;
-    font-weight: 700;
+    gap: 8px;
 }
 
 .footer-links{
     display: flex;
     list-style: none;
-    gap: 50px;
-    color: #252525;
-    font-size: 20px;
+    gap: 20px;
+    color: #888;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
 }
 
 .footer-links li{
-    cursor: pointer; 
+    cursor: pointer;
+    transition: color 0.2s;
 }
+
+.footer-links li:hover{
+    color: #e63946;
+}
+
+.footer-link{
+    text-decoration: none;
+    color: inherit;
+}
+
 .footer-social-icons{
     display: flex;
-    gap: 20px;
+    gap: 10px;
+    align-items: center;
 }
+
 .footer-icons-container{
-    padding:10px;
-    padding-bottom : 6px;
-    background: #fbfbfb;
-    border: 1px solid #ebebeb;
+    padding: 6px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    transition: all 0.2s;
+    line-height: 0;
+}
+
+.footer-icons-container img{
+    width: 16px;
+    height: 16px;
+    filter: invert(1) brightness(0.7);
+    display: inline-block;
+}
+
+.footer-icons-container:hover{
+    border-color: #e63946;
+    background: rgba(230, 57, 70, 0.15);
 }
 
 .footer-copyright{
-    display:flex;
-    flex-direction: column;
+    display: flex;
     align-items: center;
-    gap: 30px;
-    width: 100%;
-    margin-bottom: 30px;
-    color: #1a1a1a;
-    font-size: 20px;  
+    color: #555;
+    font-size: 11px;
+    gap: 0;
 }
+
+.footer-copyright p{
+    margin: 0;
+}
+
 .lines{
-    width: 80%;
-    border: none;
-    border-radius: 10px;
-    height: 3px;
-    background: #c7c7c7;
+    display: none;
 }
 
 .footer-logo-size{
-    width:150px;
+    width: 28px;
     height: auto;
+    filter: invert(1) brightness(0.9);
+    display: inline-block;
 }
+
 #title{
-    font-size: 25px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
 }

@@ -8,7 +8,8 @@ const Newcollection = () => {
   useEffect(()=>{
       fetch('http://localhost:4000/newcollections')
       .then((response)=>response.json())
-      .then((data)=>setNew_collection(data));
+      .then((data)=>setNew_collection(data))
+      .catch((err)=>console.error("Could not load new collections:", err));
   },[])
   return (
     <div  id='new-collections' className='new-collections'>

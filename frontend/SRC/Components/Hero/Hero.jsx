@@ -17,23 +17,21 @@ const Hero = () => {
     <div className="container">
       
    
-    <div class="hero">
+    <div className="hero">
     <video id='Background-clip2' autoPlay muted loop src={GtaV_background}></video>
-      <div class="hero-left">
+      <div className="hero-left">
       <h2>New Arrivals Only</h2>
           <div>
-            <p>Collections </p>
+            <p>Collections</p>
             <p>for everyone</p>
       </div>
-      <div class="hero-latest-btn" onClick={scrollToNewCollections}>
+      <div className="hero-latest-btn" onClick={scrollToNewCollections}>
         <div>Latest Collection</div>
         <img src={arrow_icon} alt="" />
       </div>
-
       </div>
-      <div class="hero-right">
+      <div className="hero-right">
         <img src={GtaV} alt="" />
-
     </div>
     </div>
     </div>

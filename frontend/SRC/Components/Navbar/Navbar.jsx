@@ -9,18 +9,21 @@ import { ShopContext } from '../../Context/ShopContext'
 const Navbar = () => {
 
   const [menu,setMenu]= useState("home")
-  const {getTotalCartItems} = useContext(ShopContext);
+  const {getTotalCartItems, isAdmin} = useContext(ShopContext);
 
   return (
-    <div class="navbar">
+    <div className="navbar">
         <div className="nav-logo">
-        <img src={logo} alt="" class="resize" />
+        <img src={logo} alt="" className="resize" />
           <p>GameVault</p>
         </div>
         <ul className="nav-menu">
           <li onClick={()=>{setMenu("home")}}><Link style={{textDecoration : 'none'}} to='/'>Home</Link>{menu==="home"?<hr/>:<></>}</li>
           <li onClick={()=>{setMenu("most_popular")}}><Link style={{textDecoration : 'none'}} to='mostpopular'>Most Popular</Link>{menu==="most_popular"?<hr/>:<></>}</li>
           <li onClick={()=>{setMenu("most_liked")}}><Link style={{textDecoration : 'none'}} to='mostliked'>Most Liked</Link>{menu==="most_liked"?<hr/>:<></>}</li>
+          {isAdmin && (
+            <li onClick={()=>{setMenu("admin")}}><Link className="admin-link" style={{textDecoration : 'none'}} to='/admin'>Admin</Link>{menu==="admin"?<hr/>:<></>}</li>
+          )}
         </ul>
         <div className="login-cart">
           {localStorage.getItem('auth-token')

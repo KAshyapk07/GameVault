@@ -1,32 +1,36 @@
 .navbar{
     margin: 0;
     display: flex;
-    justify-content: space-around;
-    height: 75px;
-    box-shadow: 0 1px 3px -2px black;
-    
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding: 0 5%;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 .nav-logo{
     display:flex;
     align-items: center;
-    gap: 10px;
-    width:30%;
+    gap: 12px;
 }
 .nav-logo p{
-    color: #171717;
-    font-size: 30px;
-    font-weight: 600;
+    color: #1a1a2e;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 .nav-menu{
     display: flex;
     align-items: center;
     justify-content: center;
-    width:50%;
     list-style: none;
-    gap: 50px;
-    color: #626262;
-    font-size: 20px;
-    font-weight: 600;
+    gap: 40px;
+    color: #555;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .nav-menu li{
@@ -34,34 +38,47 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
+    gap: 4px;
     cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.nav-menu li:hover{
+    color: #e63946;
 }
 
 .nav-menu hr{
     border:none;
-    width: 80%;
+    width: 70%;
     height: 3px;
     border-radius: 10px;
-    background: #FF4141;
+    background: #e63946;
 }
 .login-cart{
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 20%;
-    margin-left: 4%;
-    gap: 16px;
-
+    justify-content: flex-end;
+    gap: 20px;
 }
 
 .login-cart button{
     background: white ;
     justify-content: center;
-    height: 2rem;
-    width: 5rem;
-    border-radius: 0.5rem;
-    border: 1px solid #626262;
+    height: 36px;
+    width: 90px;
+    border-radius: 8px;
+    border: 1.5px solid #ddd;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.login-cart button:hover{
+    background: #1a1a2e;
+    color: #fff;
+    border-color: #1a1a2e;
 }
 .login-cart button:active{
     background: #f3f3f3;
@@ -74,16 +91,29 @@
     justify-content: center;
     margin-top: -35px;
     margin-left:-30px;
-    background: #FF4141;
+    background: #e63946;
     color: white;
     border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 
-
-
-
 .resize{
-    width: 17%;
+    width: 50px;
     height: auto;
+}
+
+/* Admin nav link styling */
+.nav-menu li a.admin-link {
+    color: #e63946;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-menu li a.admin-link::before {
+    content: '⚙';
+    font-size: 14px;
 }

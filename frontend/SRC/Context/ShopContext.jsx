@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-import '../Components/Assets/all_product'
 
 export const ShopContext = createContext(null);
 const getDefaultCart=()=>{
@@ -13,11 +12,14 @@ const getDefaultCart=()=>{
 const ShopContextprovider =(props)=>{
     const [all_product,setAll_product]= useState([]);
     const [cartItems,setCartitems]=useState(getDefaultCart());
+    const [isAdmin, setIsAdmin] = useState(false);
     
     useEffect(()=>{
         fetch('http://localhost:4000/allproducts')
         .then((response)=>response.json())
         .then((data)=>setAll_product(data))
+        .catch((err)=>console.error("Could not load products (is the backend running?):", err));
+
         if(localStorage.getItem('auth-token')){
             fetch('http://localhost:4000/getcart',{
                 method:'POST',
@@ -28,8 +30,18 @@ const ShopContextprovider =(props)=>{
                 },
                 body:"",
             }).then((response)=>response.json())
-            .then((data)=>setCartitems(data));
-            
+            .then((data)=>setCartitems(data))
+            .catch((err)=>console.error("Could not load cart:", err));
+
+            // Check admin status
+            fetch('http://localhost:4000/isadmin',{
+                method:'GET',
+                headers:{
+                    'auth-token':`${localStorage.getItem('auth-token')}`,
+                },
+            }).then((response)=>response.json())
+            .then((data)=>setIsAdmin(data.isAdmin || false))
+            .catch((err)=>console.error("Could not check admin status:", err));
         }
     },[]);
     
@@ -45,8 +57,7 @@ const ShopContextprovider =(props)=>{
                 },
                 body:JSON.stringify({"itemId":itemId})
             })
-            .then((response)=>response.json())
-            .then((data)=>console.log(data));
+            .then((response)=>response.json());
         }
     }
     const removeFromCart=(itemId)=>{
@@ -57,12 +68,11 @@ const ShopContextprovider =(props)=>{
                 headers:{
                     Accept:'application/form-data',
                     'auth-token':`${localStorage.getItem('auth-token')}`,
-                    'Content-Type': 'application/json',                 
+                    'Content-Type': 'application/json',
                 },
                 body:JSON.stringify({"itemId":itemId})
             })
-            .then((response)=>response.json())
-            .then((data)=>console.log(data));
+            .then((response)=>response.json());
         }
     }
 
@@ -89,7 +99,7 @@ const ShopContextprovider =(props)=>{
         return totalItem;
     }
 
-    const contextValue ={getTotalCartItems,getTotalCartAmount,all_product,cartItems,addToCart,removeFromCart}
+    const contextValue ={getTotalCartItems,getTotalCartAmount,all_product,cartItems,addToCart,removeFromCart,isAdmin,setIsAdmin}
     return(
         <ShopContext.Provider value={contextValue}>
             {props.children}
