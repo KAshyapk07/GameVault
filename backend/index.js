@@ -16,9 +16,9 @@ mongoose
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err.message));
 
-app.get("/", (req, res) => {
-  res.send("Express App is Running");
-});
+// app.get("/", (req, res) => {
+//   res.send("Express App is Running");
+// });
 
 // Image upload
 
