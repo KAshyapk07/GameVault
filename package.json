@@ -8,8 +8,8 @@
     "start:frontend": "cd frontend && npm start",
     "start:admin": "cd admin && npm run dev",
     "build": "npm run build:frontend && npm run build:admin",
-    "build:frontend": "cd frontend && npm install && npm run build",
-    "build:admin": "cd admin && npm install && npm run build"
+    "build:frontend": "cd frontend && npm install --include=dev && npm run build",
+    "build:admin": "cd admin && npm install --include=dev && npm run build"
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
