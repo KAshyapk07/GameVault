@@ -2,7 +2,7 @@ import React from 'react'
 import './Hero.css';
 import arrow_icon from '../Assets/arrow.png';
 import GtaV from '../Assets/GTAV2.jpg';
-import GtaV_background from "../Assets/Background Video/cinematics.mp4"
+// import GtaV_background from "../Assets/Background Video/cinematics.mp4"
 
 const Hero = () => {
 
@@ -18,7 +18,8 @@ const Hero = () => {
       
    
     <div className="hero">
-    <video id='Background-clip2' autoPlay muted loop src={GtaV_background}></video>
+    {/* We will use a direct URL for the video instead of a local import */}
+    <video id='Background-clip2' autoPlay muted loop src="https://res.cloudinary.com/dytm1j22e/video/upload/v1709012345/GtaV_background.mp4"></video>
       <div className="hero-left">
       <h2>New Arrivals Only</h2>
           <div>
