@@ -2,7 +2,7 @@ import React from 'react'
 import './Hero.css';
 import arrow_icon from '../Assets/arrow.png';
 import GtaV from '../Assets/GTAV2.jpg';
-import GtaV_background from "../Assets/Background Video/GtaV_background.mp4"
+import GtaV_background from "../Assets/Background Video/cinematics.mp4"
 
 const Hero = () => {
 
