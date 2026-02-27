@@ -19,7 +19,7 @@ const Hero = () => {
    
     <div className="hero">
     {/* We will use a direct URL for the video instead of a local import */}
-    <video id='Background-clip2' autoPlay muted loop src="https://res.cloudinary.com/dytm1j22e/video/upload/v1709012345/GtaV_background.mp4"></video>
+    <video id='Background-clip2' autoPlay muted loop src="https://res.cloudinary.com/dzhbpny03/video/upload/v1772168095/GtaV_background_gxmtiu.mp4"></video>
       <div className="hero-left">
       <h2>New Arrivals Only</h2>
           <div>
